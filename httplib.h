@@ -2640,6 +2640,7 @@ template <typename T> inline ssize_t handle_EINTR(T fn) {
   ssize_t res = 0;
   while (true) {
     res = fn();
+    // interrupt by signal
     if (res < 0 && errno == EINTR) { continue; }
     break;
   }

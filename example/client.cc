@@ -12,18 +12,24 @@
 
 using namespace std;
 
-int main(void) {
+int main(int argc, char** argv) {
+
+  if (argc < 2) {
+    cerr << "Usage: " << argv[0] << " path" << endl;
+    return -1;
+  }
+
 #ifdef CPPHTTPLIB_OPENSSL_SUPPORT
   httplib::SSLClient cli("localhost", 8080);
   // httplib::SSLClient cli("google.com");
   // httplib::SSLClient cli("www.youtube.com");
   cli.set_ca_cert_path(CA_CERT_FILE);
-  cli.enable_server_certificate_verification(true);
+  cli.enable_server_certificate_verification(false);
 #else
   httplib::Client cli("localhost", 8080);
 #endif
 
-  if (auto res = cli.Get("/hi")) {
+  if (auto res = cli.Get(argv[1])) {
     cout << res->status << endl;
     cout << res->get_header_value("Content-Type") << endl;
     cout << res->body << endl;

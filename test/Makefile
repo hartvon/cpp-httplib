@@ -4,8 +4,9 @@ CXXFLAGS = -g -std=c++11 -I. -Wall -Wextra -Wtype-limits -Wconversion -Wshadow #
 PREFIX = /usr/local
 #PREFIX = $(shell brew --prefix)
 
-OPENSSL_DIR = $(PREFIX)/opt/openssl@1.1
+#OPENSSL_DIR = $(PREFIX)/opt/openssl@1.1
 #OPENSSL_DIR = $(PREFIX)/opt/openssl@3
+OPENSSL_DIR = $(PREFIX)/ssl
 OPENSSL_SUPPORT = -DCPPHTTPLIB_OPENSSL_SUPPORT -I$(OPENSSL_DIR)/include -L$(OPENSSL_DIR)/lib -lssl -lcrypto
 
 ifneq ($(OS), Windows_NT)
@@ -17,7 +18,8 @@ endif
 
 ZLIB_SUPPORT = -DCPPHTTPLIB_ZLIB_SUPPORT -lz
 
-BROTLI_DIR = $(PREFIX)/opt/brotli
+#BROTLI_DIR = $(PREFIX)/opt/brotli
+BROTLI_DIR = $(PREFIX)/brotli
 BROTLI_SUPPORT = -DCPPHTTPLIB_BROTLI_SUPPORT -I$(BROTLI_DIR)/include -L$(BROTLI_DIR)/lib -lbrotlicommon -lbrotlienc -lbrotlidec
 
 TEST_ARGS = gtest/gtest-all.cc gtest/gtest_main.cc $(OPENSSL_SUPPORT) $(ZLIB_SUPPORT) $(BROTLI_SUPPORT) -pthread
